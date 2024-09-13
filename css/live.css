@@ -1,0 +1,88 @@
+/* Banner Section */
+.banner-section {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Hide overflow to prevent unwanted scrollbars */
+    background-color: white;
+    
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-container img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+.banner-section::before{
+    background: rgba(255, 255, 255);
+    height: 0;
+    width: 0;
+}
+
+
+/* Responsive Adjustments */
+
+@media (max-width: 1200px){
+    .banner-section{
+        height: 90vh;
+    }
+}
+
+@media (max-width: 968px) {
+    .banner-section{
+        height: 70vh;
+    }
+
+    .nav {
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+
+    .banner-content p {
+        font-size: 1.2rem;
+    }
+
+    .banner-content .btn {
+        padding: 8px 25px;
+        font-size: 1rem;
+    }
+    .banner-section{
+        height: 50vh;
+    }
+    .nav {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .banner-section{
+        height: 30vh;
+    }
+    .nav {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+

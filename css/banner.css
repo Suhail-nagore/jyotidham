@@ -1,0 +1,46 @@
+div.et_pb_section.et_pb_section_0 {
+    background-position: top center;
+    background-blend-mode: overlay;
+    background-image: url("../images/donate-page-banner.jpg") !important;
+}
+
+.et_pb_section_0.et_pb_section {
+    padding-top: 9%;
+    padding-bottom: 9%;
+    margin-top: 30px;
+    margin-right: 25px;
+    margin-left: 25px;
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.et_pb_section_0 {
+    border-radius: 20px 20px 20px 20px;
+    overflow: hidden;
+    background-size: cover;
+
+}
+
+.et_pb_row_0.et_pb_row {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.et_pb_row {
+    width: 80%;
+    max-width: 1080px;
+    margin: auto;
+    position: relative;
+}
+
+.et_pb_text_0 h1 {
+    font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif;
+    font-weight: 700;
+    font-size: 54px;
+    color: #ffffff !important;
+    line-height: 2.5em;
+    text-align: center;
+}

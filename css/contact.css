@@ -1,0 +1,161 @@
+.et_pb_section_1.et_pb_section {
+    padding-top: 80px;
+    padding-right: 0px;
+    padding-bottom: 120px;
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+
+.et_pb_text_1.et_pb_text {
+    color: #898f99 !important;
+}
+
+.et_pb_text_1 {
+    /* font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif; */
+    font-size: 18px;
+    line-height: 2em;
+    padding-bottom: 20px !important;
+    margin-bottom: 0px !important;
+}
+
+.et_pb_text_1 h1 {
+    font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    color: #000000 !important;
+}
+
+.et_pb_text_2 {
+    font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.et_pb_text_align_left {
+    text-align: left;
+}
+
+.et_pb_text_2 p {
+    line-height: 1.5em;
+    color: #666;
+}
+
+.et_pb_text_3 {
+    font-family: 'Open Sans', Helvetica, Arial, Lucida, sans-serif;
+    font-size: 16px;
+    line-height: 0.4em;
+    padding-top: 0px !important;
+}
+
+.et_pb_text_3 h6 {
+    font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif;
+    font-size: 16px;
+    color: #666 !important;
+    line-height: 2.8em;
+}
+
+.et_pb_text_3 p {
+    line-height: 0.4em;
+    color: #666;
+}
+
+.et-pb-contact-message {
+    position: relative;
+}
+
+.et_pb_contact {
+    position: relative;
+}
+
+.et_pb_contact_form {
+    margin-left: -3%;
+}
+
+p.et_pb_contact_field {
+    padding: 0 0 0 3%;
+    margin-bottom: 3%;
+    background-position: 50%;
+    background-size: cover;
+}
+
+.et_pb_with_border{
+    border: 0 solid #333;
+
+}
+
+.et_pb_with_border {
+    position: relative;
+}
+
+
+.et_pb_contact_form_container .et_pb_contact_field_0.et_pb_contact_field .input, .et_pb_contact_form_container .et_pb_contact_field_0.et_pb_contact_field .input[type="checkbox"]+label i, .et_pb_contact_form_container .et_pb_contact_field_0.et_pb_contact_field .input[type="radio"]+label i {
+    border-bottom-width: 1px;
+}
+
+.et_pb_contact_field_0.et_pb_contact_field .input, .et_pb_contact_field_0.et_pb_contact_field .input[type="checkbox"]+label i, .et_pb_contact_field_0.et_pb_contact_field .input[type="radio"]+label i {
+    background-color: #ffffff;
+}
+
+.et_pb_with_border.et_pb_contact_field input{
+    border: 0 solid #333;
+}
+
+.et_pb_contact p input, .et_pb_contact p textarea, .et_pb_subscribe .et_pb_contact_field input, .et_pb_subscribe .et_pb_contact_field textarea {
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    -webkit-appearance: none;
+    width: 100%;
+    border-width: 0;
+    border-radius: 0;
+    color: #999;
+    font-size: 14px;
+    padding: 16px;
+}
+
+.contact-border{
+    border-bottom-width: 1px;
+}
+
+.et_pb_contact_form_label {
+    display: none;
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_1.et_pb_contact_field .input, .et_pb_contact_form_container .et_pb_contact_field_1.et_pb_contact_field .input[type="checkbox"]+label i, .et_pb_contact_form_container .et_pb_contact_field_1.et_pb_contact_field .input[type="radio"]+label i {
+    border-bottom-width: 1px;
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_2.et_pb_contact_field .input, .et_pb_contact_form_container .et_pb_contact_field_2.et_pb_contact_field .input[type="checkbox"]+label i, .et_pb_contact_form_container .et_pb_contact_field_2.et_pb_contact_field .input[type="radio"]+label i {
+    border-bottom-width: 1px;
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input[type="checkbox"]+label i, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input[type="radio"]+label i {
+    border-bottom-width: 1px;
+}
+
+.et_contact_bottom_container {
+    float: right;
+    text-align: right;
+    margin-top: -1.5%;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.et_pb_button {
+    color: #ffffff !important;
+    border-radius: 50px;
+    font-size: 15px;
+    /* font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif !important; */
+    font-weight: 700 !important;
+    background-color: #000000;
+    padding-top: 14px !important;
+    padding-right: 50px !important;
+    padding-bottom: 14px !important;
+    padding-left: 38px !important;
+    margin-top: 10px !important;
+}
