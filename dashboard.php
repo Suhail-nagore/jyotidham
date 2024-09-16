@@ -25,6 +25,7 @@ if(!isset($_SESSION['username'])) {
                     <div class="card-body">
                         <div class="text-center mb-3">
                             <a href="add-user.php" class="btn btn-primary mb-3">Add User</a> <br>
+                            <a href="add-event.php" class="btn btn-primary mb-3">Add Event</a> <br>
                             <!-- <a href="manage-blogs.php" class="btn btn-primary mb-3">Manage Blogs</a> <br>
                             <a href="manage-news.php" class="btn btn-primary mb-3">Manage News</a> <br> -->
                             <a href="index.html" class="btn btn-secondary mb-3">Homepage</a> <br>

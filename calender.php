@@ -1,13 +1,68 @@
+<?php
+// Connect to the database
+include 'db.php';
+
+// Define how many events to show per page (2 months of events)
+$months_to_show = 2;
+
+// Determine the current page and offset for pagination
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $months_to_show;
+
+// Fetch events grouped by month and sorted by date
+$sql = "
+    SELECT 
+    day, 
+    event_date, 
+    DATE_FORMAT(event_date, '%Y-%m') AS event_month, 
+    event_name, 
+    event_description, 
+    event_time, 
+    event_end_time,
+    time_zone,
+    event_venue, 
+    is_featured
+FROM events
+WHERE event_date >= CURDATE()
+ORDER BY event_date ASC"; 
+
+$result = $conn->query($sql);
+
+// Array to store grouped events by month
+$events_by_month = [];
+
+// Loop through fetched events and group by month
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $month = $row['event_month'];
+        if (!isset($events_by_month[$month])) {
+            $events_by_month[$month] = [];
+        }
+        $events_by_month[$month][] = $row;
+    }
+}
+
+// Close the connection
+$conn->close();
+?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Satsang</title>
+    <title>Calender</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/live.css">
+    <link rel="stylesheet" href="./css/calender.css">
 </head>
+
 <body>
     <div>
         <header class="header-section">
@@ -41,13 +96,56 @@
             </nav>
         </header>
 
-        <!-- Banner Section -->
-        <section class="banner-section">
-            <div class="video-container">
-                <img src="./images/Live-Satsang-Thumbnail-2.png" alt="">
-            </div>
-        </section>
+        <div class="container">
+                <?php foreach ($events_by_month as $month => $events): ?>
+                    <h2 class="month-heading">
+                        <time class="month-time" datetime="<?= $month; ?>">
+                            <?= date('F Y', strtotime($month . "-01")); ?>
+                        </time>
+                    </h2>
+
+                    <?php foreach ($events as $event): ?>
+                        <div class="event-container">
+                            <div class="event-date">
+                            <span class="day"><?= strtoupper(substr($event['day'], 0, 3)); ?></span>
+                            
+                            <span class="date"><?= date('d', strtotime($event['event_date'])); ?></span>
+
+                            </div>
+
+                            <div class="event-details">
+                                <div class="event-header">
+                                        <?php if ($event['is_featured']): ?>
+                                            <span class="featured-icon">
+                                                <svg width="15px" height="15px" viewBox="0 0 8 10" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h8v10L4.049 7.439 0 10V0z"></path>
+                                                </svg>
+                                                <span class="featured-text">Featured</span>
+                                            </span>
+                                        <?php endif; ?>
+                                        <span class="event-time"><?= $event['event_date']; ?> @ <?= date('H:i', strtotime($event['event_time'])); ?> <?= date('H:i', strtotime($event['event_end_time'])); ?> <?= $event['time_zone']; ?></span>
+                                </div>
+
+                                <h3 class="event-title">
+                                    <a href="#" class="event-link"><?= $event['event_name']; ?></a>
+                                </h3>
+
+                                <address class="event-venue"><?= $event['event_venue']; ?></address>
+                        
+
+                                <div class="event-description">
+                                    <p><?= substr($event['event_description'], 0, 200); ?><?php if (strlen($event['event_description']) > 200) echo '...'; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+        </div>
+        <!-- Pagination Links -->
         
+
+
+
     </div>
 
     <footer class="footer-section">
@@ -56,12 +154,10 @@
                 <!-- Left Side: Logos -->
                 <div class="col-lg-4 col-md-12 logos">
                     <div class="logo">
-                        <img src="./images/logo-jd-light.png"
-                            alt="Jyotidham Logo" />
+                        <img src="./images/logo-jd-light.png" alt="Jyotidham Logo" />
                     </div>
                     <div class="logo">
-                        <img src="./images/logo-round-white.png"
-                            alt="logo-round-white" />
+                        <img src="./images/logo-round-white.png" alt="logo-round-white" />
                     </div>
                 </div>
 
@@ -91,17 +187,17 @@
                             <p><a href="terms.html">Refund &amp; Privacy Policy</a>
                             </p>
                             <p>We accept</p>
-                            <img src="./images/payment-cards-updated.png"
-                                alt="Payment Cards">
+                            <img src="./images/payment-cards-updated.png" alt="Payment Cards">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

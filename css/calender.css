@@ -1,0 +1,119 @@
+h2 time {
+    font-size: 16px;
+    columns: #666;
+}
+
+.event-container {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.event-date {
+    width: 11%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+.event-date .day {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.event-date .date {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.event-details {
+    width: 89%;
+    padding-left: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.event-header {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.featured-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.featured-icon svg {
+    fill: #ff9800;
+    margin-right: 5px;
+}
+
+.event-time {
+    font-size: 14px;
+    color: #666;
+}
+
+.event-title {
+    /* font-size: 28px; */
+    margin: 10px 0 5px 0;
+}
+
+.event-venue {
+    font-size: 18px;
+    color: #999;
+}
+
+.event-description {
+    font-size: 16px;
+    color: #555;
+}
+
+
+/* Link Styling */
+.event-link {
+    text-decoration: none;
+    color: black; /* Start color */
+    font-size: 32px;
+}
+
+/* Blinking animation */
+@keyframes blink {
+    0% {
+        color: black;
+    }
+    50% {
+        color: green;
+    }
+    100% {
+        color: black;
+    }
+}
+
+/* Apply the animation to the link */
+.event-link {
+    animation: blink 1s infinite; /* Change color every second */
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.pagination-prev, .pagination-next {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination-prev:hover, .pagination-next:hover {
+    background-color: #007bff;
+    color: white;
+}
