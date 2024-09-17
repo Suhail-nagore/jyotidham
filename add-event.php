@@ -230,6 +230,16 @@ $conn->close();
                 }
             }
         });
+
+
+        document.getElementById("phoneNumber").addEventListener("input", function () {
+            const phoneInput = this;
+            if (phoneInput.value.length !== 10 || isNaN(phoneInput.value)) {
+                phoneInput.classList.add('is-invalid');
+            } else {
+                phoneInput.classList.remove('is-invalid');
+            }
+        });
     </script>
 </body>
 </html>

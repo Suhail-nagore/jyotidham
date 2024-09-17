@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Submission Success</title>
+  <style>
+    body {
+      background-image: url("./images/success.webp");
+      /* background-repeat: no-repeat; */
+      background-position: center;
+      background-size: contain;
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 4px;
+      /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: rgb(53, 50, 50);
+      font-weight: bolder;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    a {
+      color: #ffffff;
+      background-color: #007bff;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+    .container1 {
+    max-width: 600px;
+    margin: 0 auto;
+    /* padding: 40px; */
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 4px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    text-align: center;
+  }
+
+  .container1 img {
+    max-width: 50%; /* Set the maximum width to 100% */
+    height: 50%; /* Let the height adjust automatically to maintain aspect ratio */
+  }
+  </style>
+</head>
+<body>
+  <div class="container1">
+    <img src="./images/success image.webp"alt="">
+  </div>
+  <div class="container">
+    <h1>Thank You for Contacting Us</h1>
+    <p>
+      Thank you for submitting the form. We have received your information.
+      <br />
+      we will contact you shortly meanwhile you can check our other services.
+    </p>
+    <a href="index.html">Go back to homepage</a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script>
+    const startConfetti = () => {
+      setTimeout(function () {
+        console.log("start");
+        confetti.create(document.getElementById('canvas-confetti'), {
+          resize: true,
+          useWorker: true
+        })({
+          particleCount: 1000,
+          spread: 200,
+          origin: { y: 0 }
+        });
+      }, 1000);
+    };
+
+    const stopConfetti = () => {
+      setTimeout(function () {
+        console.log("stop");
+        // No need to stop, as canvas-confetti stops automatically
+      }, 6000);
+    };
+
+    startConfetti();
+    stopConfetti();
+  </script>
+</body>
+</html>
