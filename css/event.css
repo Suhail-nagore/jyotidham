@@ -1,0 +1,41 @@
+.all-events {
+    margin: 10px;
+    padding: auto;   
+}
+
+@media (max-width: 1200px){
+    .event-heading {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 968px) {
+    .event-heading {
+        font-size: 28px;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .event-heading {
+        font-size: 26px;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .event-heading {
+        font-size: 26px;
+    }
+}
+
+.event-description h3 {
+    font-size: 20px;
+    color: #666;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.t-head{
+    font-size: 20px;
+}

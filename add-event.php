@@ -221,7 +221,7 @@ $conn->close();
             var periods = ['AM', 'PM'];
             for (var periodIndex = periods.indexOf(startPeriod); periodIndex < periods.length; periodIndex++) {
                 var period = periods[periodIndex];
-                for (var hour = (periodIndex == periods.indexOf(startPeriod)) ? startHour + 1 : 1; hour < 12; hour++) {
+                for (var hour = (periodIndex == periods.indexOf(startPeriod)) ? startHour + 1 : 1; hour <= 12; hour++) {
                     var hourFormatted = hour < 10 ? '0' + hour : hour;
                     if (hour > startHour || period != startPeriod) {
                         endTimeDropdown.append('<option value="' + hourFormatted + ':00:00 ' + period + '">' + hourFormatted + ':00 ' + period + '</option>');

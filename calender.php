@@ -12,6 +12,7 @@ $offset = ($page - 1) * $months_to_show;
 // Fetch events grouped by month and sorted by date
 $sql = "
     SELECT 
+    id,
     day, 
     event_date, 
     DATE_FORMAT(event_date, '%Y-%m') AS event_month, 
@@ -127,8 +128,11 @@ $conn->close();
                                 </div>
 
                                 <h3 class="event-title">
-                                    <a href="#" class="event-link"><?= $event['event_name']; ?></a>
+                                    <a href="event.php?id=<?= $event['id']; ?>" class="event-link">
+                                        <?= $event['event_name']; ?>
+                                    </a>
                                 </h3>
+
 
                                 <address class="event-venue"><?= $event['event_venue']; ?></address>
                         
