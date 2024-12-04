@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
     <!-- Header Section -->
     <header class="header-section">
         <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.php">
                 <img src="./images/logo-dark-bold.png" alt="Jyotidham Logo" class="header-logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -56,7 +56,7 @@ if (isset($_GET['id'])) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="live-satsang.html">Live Satsang</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
                     <li class="nav-item"><a class="nav-link" href="calender.php">Calendar</a></li>

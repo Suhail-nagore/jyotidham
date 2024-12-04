@@ -40,12 +40,12 @@ $conn->close();
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Maps API (for autocomplete and map selector) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP4YgDI3gOakb5Y-kqrCCtCT4M8pj9Mzk&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM1nAywoajfBnPLSqZn0z5wvUNj2ZYhF0&libraries=places"></script>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5" style="margin-top:4rem !important; margin-bottom:4rem !important; max-width: 500px !important; border: 3px solid blue;border-radius:15px">
     <h2>Add Event</h2>
-    <form action="add-event.php" method="post">
+    <form action="add-event.php" method="post" style="margin-top:2rem !important; margin-bottom:2rem !important;">
         <!-- Day Dropdown -->
         <div class="form-group">
             <label for="day">Day</label>
@@ -151,6 +151,7 @@ $conn->close();
 
         <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="./dashboard.php" class="btn btn-secondary">Back to Dashboard</a>
     </form>
 </div>
 
@@ -175,38 +176,48 @@ $conn->close();
             zoom: 5
         });
 
-        // Marker to select location
+        // Initialize the marker
         marker = new google.maps.Marker({
             position: defaultLocation,
             map: map,
-            draggable: true
+            draggable: true // Enable dragging
         });
 
-        // Event listener for marker position change
-        google.maps.event.addListener(marker, 'position_changed', function() {
+        // Update latitude and longitude fields when the marker is dragged
+        marker.addListener('dragend', function () {
             const lat = marker.getPosition().lat();
             const lng = marker.getPosition().lng();
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
         });
 
-        // Autocomplete for venue input
+        // Initialize autocomplete for the venue input field
         autocomplete = new google.maps.places.Autocomplete(document.getElementById('event_venue'), {
             types: ['geocode'],
             componentRestrictions: { country: 'ca' } // Restrict to Canada
         });
 
+        // Event listener for place selection from autocomplete
         autocomplete.addListener('place_changed', function () {
             const place = autocomplete.getPlace();
             if (place.geometry) {
-                map.setCenter(place.geometry.location);
-                marker.setPosition(place.geometry.location);
+                const location = place.geometry.location;
+
+                // Update the map and marker position
+                map.setCenter(location);
+                map.setZoom(15);
+                marker.setPosition(location);
+
+                // Update latitude and longitude fields
+                document.getElementById('latitude').value = location.lat();
+                document.getElementById('longitude').value = location.lng();
             }
         });
     }
 
     window.onload = initMap;
 </script>
+
 
 <script>
         $('#event_time').change(function() {
@@ -228,16 +239,6 @@ $conn->close();
                         endTimeDropdown.append('<option value="' + hourFormatted + ':30:00 ' + period + '">' + hourFormatted + ':30 ' + period + '</option>');
                     }
                 }
-            }
-        });
-
-
-        document.getElementById("phoneNumber").addEventListener("input", function () {
-            const phoneInput = this;
-            if (phoneInput.value.length !== 10 || isNaN(phoneInput.value)) {
-                phoneInput.classList.add('is-invalid');
-            } else {
-                phoneInput.classList.remove('is-invalid');
             }
         });
     </script>

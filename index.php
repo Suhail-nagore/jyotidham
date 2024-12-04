@@ -1,3 +1,32 @@
+<?php
+include 'db.php';
+
+try {
+    // Fetch the upcoming 6 events
+    $sql = "SELECT id, event_name, event_description FROM events WHERE event_date >= CURDATE() ORDER BY event_date ASC LIMIT 6";
+    $result = $conn->query($sql);
+
+    // Check if the query returned results
+    if ($result->num_rows > 0) {
+        $events = $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        $events = []; // No upcoming events
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+    die();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar and Banner</title>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +44,7 @@
     <div>
         <header class="header-section">
             <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
                     <img src="./images/logo-dark-bold.png" alt="Jyotidham Logo" class="header-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -25,7 +54,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="live-satsang.html">Live Satsang</a>
@@ -63,49 +92,26 @@
         <div class="container">
             <h1 class="text-left text">Upcoming Events</h1>
             <div class="row">
-                <!-- Event Card 1 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card event-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a
-                                    href="https://jyotidham.ca/event/dr-vijay-sharma-and-rajni-sharma-satsang-13/">Dr.Vijay
-                                    Sharma and Rajni Sharma – Satsang</a></h5>
-                            <p class="card-text">Event description goes here.</p>
-                            <a href="https://jyotidham.ca/event/dr-vijay-sharma-and-rajni-sharma-satsang-13/"
-                                class="read">Read More</a>
+                <?php foreach ($events as $event): ?>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card event-card" style="height: 100%; width: 100%;">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="event-details.php?id=<?= $event['id']; ?>">
+                                        <?= strlen($event['event_name']) > 50 ? substr($event['event_name'], 0, 47) . '...' : $event['event_name']; ?>
+                                    </a>
+                                </h5>
+                                <p class="card-text">
+                                    <?= strlen($event['event_description']) > 100 ? substr($event['event_description'], 0, 97) . '...' : $event['event_description']; ?>
+                                </p>
+                                <a href="event.php?id=<?= $event['id']; ?>" class="read">Read More</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Event Card 2 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card event-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a
-                                    href="https://jyotidham.ca/event/mr-satish-puri-and-puja-puri-satsang-14/">Mr.Satish
-                                    Puri and Puja Puri – Satsang</a></h5>
-                            <p class="card-text">Event description goes here.</p>
-                            <a href="https://jyotidham.ca/event/mr-satish-puri-and-puja-puri-satsang-14/"
-                                class="read">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Event Card 3 -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card event-card">
-                        <div class="card-body">
-                            <h5 class="card-title"><a
-                                    href="https://jyotidham.ca/event/mr-kamal-dhawan-and-sandhya-dhawan-satsang-14/">Mr.Kamal
-                                    Dhawan and Sandhya Dhawan – Satsang</a></h5>
-                            <p class="card-text">Event description goes here.</p>
-                            <a href="https://jyotidham.ca/event/mr-kamal-dhawan-and-sandhya-dhawan-satsang-14/"
-                                class="read">Read More</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Additional Event Cards Here -->
+                <?php endforeach; ?>
             </div>
             <div class="view-div">
-                <a href="#" class="view-link">View All</a>
+                <a href="calender.php" class="view-link">View All</a>
             </div>
         </div>
     </section>

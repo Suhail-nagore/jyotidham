@@ -2,55 +2,65 @@
 // Connect to the database
 include 'db.php';
 
-// Define how many events to show per page (2 months of events)
-$months_to_show = 2;
+// Define the number of events per page
+$events_per_page = 20;
 
-// Determine the current page and offset for pagination
+// Get the current page from the request or default to 1
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $months_to_show;
+$offset = ($page - 1) * $events_per_page;
 
-// Fetch events grouped by month and sorted by date
+// Fetch events for the current page
 $sql = "
     SELECT 
-    id,
-    day, 
-    event_date, 
-    DATE_FORMAT(event_date, '%Y-%m') AS event_month, 
-    event_name, 
-    event_description, 
-    event_time, 
-    event_end_time,
-    time_zone,
-    event_venue, 
-    is_featured
-FROM events
-WHERE event_date >= CURDATE()
-ORDER BY event_date ASC"; 
+        id, 
+        day, 
+        event_date, 
+        DATE_FORMAT(event_date, '%Y-%m') AS event_month, 
+        event_name, 
+        event_description, 
+        event_time, 
+        event_end_time, 
+        time_zone, 
+        event_venue, 
+        is_featured
+    FROM events
+    WHERE event_date >= CURDATE()
+    ORDER BY event_date ASC
+    LIMIT $events_per_page OFFSET $offset";
 
 $result = $conn->query($sql);
 
-// Array to store grouped events by month
-$events_by_month = [];
 
-// Loop through fetched events and group by month
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $month = $row['event_month'];
-        if (!isset($events_by_month[$month])) {
-            $events_by_month[$month] = [];
-        }
-        $events_by_month[$month][] = $row;
-    }
+// Prepare the events data
+$events = [];
+while ($row = $result->fetch_assoc()) {
+    $events[] = $row;
 }
+
+
+$has_more_events_sql = "
+    SELECT 1 
+    FROM events 
+    WHERE event_date >= CURDATE()
+    ORDER BY event_date ASC
+    LIMIT 1 OFFSET " . ($offset + $events_per_page);
+
+$has_more_events = $conn->query($has_more_events_sql)->num_rows > 0;
+
+// Return JSON response if it's an AJAX request
+if (isset($_GET['ajax']) && $_GET['ajax'] === '1') {
+    echo json_encode([
+        'events' => $events,
+        'has_next' => $has_more_events, // Indicates if the next page is available
+        'has_prev' => $page > 1         // Indicates if the previous page is available
+    ]);
+    exit;
+}
+
 
 // Close the connection
 $conn->close();
 ?>
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +78,7 @@ $conn->close();
     <div>
         <header class="header-section">
             <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="index.php">
                     <img src="./images/logo-dark-bold.png" alt="Jyotidham Logo" class="header-logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -78,7 +88,7 @@ $conn->close();
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.html">Home</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="live-satsang.html">Live Satsang</a>
@@ -98,58 +108,18 @@ $conn->close();
         </header>
 
         <div class="container">
-                <?php foreach ($events_by_month as $month => $events): ?>
-                    <h2 class="month-heading">
-                        <time class="month-time" datetime="<?= $month; ?>">
-                            <?= date('F Y', strtotime($month . "-01")); ?>
-                        </time>
-                    </h2>
+            <!-- Event container to dynamically update -->
+            <div id="event-container">
+                <!-- This will be dynamically populated -->
+            </div>
 
-                    <?php foreach ($events as $event): ?>
-                        <div class="event-container">
-                            <div class="event-date">
-                            <span class="day"><?= strtoupper(substr($event['day'], 0, 3)); ?></span>
-                            
-                            <span class="date"><?= date('d', strtotime($event['event_date'])); ?></span>
+            <!-- Pagination Links -->
+            <div id="pagination" class="text-center">
+                <button id="prev-page" class="btn btn-primary" style="display: none;">Previous</button>
+                <button id="next-page" class="btn btn-primary" style="display: none;">Next</button>
+            </div>
 
-                            </div>
-
-                            <div class="event-details">
-                                <div class="event-header">
-                                        <?php if ($event['is_featured']): ?>
-                                            <span class="featured-icon">
-                                                <svg width="15px" height="15px" viewBox="0 0 8 10" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h8v10L4.049 7.439 0 10V0z"></path>
-                                                </svg>
-                                                <span class="featured-text">Featured</span>
-                                            </span>
-                                        <?php endif; ?>
-                                        <span class="event-time"><?= $event['event_date']; ?> @ <?= date('H:i', strtotime($event['event_time'])); ?> <?= date('H:i', strtotime($event['event_end_time'])); ?> <?= $event['time_zone']; ?></span>
-                                </div>
-
-                                <h3 class="event-title">
-                                    <a href="event.php?id=<?= $event['id']; ?>" class="event-link">
-                                        <?= $event['event_name']; ?>
-                                    </a>
-                                </h3>
-
-
-                                <address class="event-venue"><?= $event['event_venue']; ?></address>
-                        
-
-                                <div class="event-description">
-                                    <p><?= substr($event['event_description'], 0, 200); ?><?php if (strlen($event['event_description']) > 200) echo '...'; ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endforeach; ?>
         </div>
-        <!-- Pagination Links -->
-        
-
-
-
     </div>
 
     <footer class="footer-section">
@@ -202,6 +172,77 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let currentPage = 1;
+
+            // Function to fetch events and update the DOM
+            function fetchEvents(page) {
+                fetch(`calender.php?page=${page}&ajax=1`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const eventContainer = document.getElementById("event-container");
+                        eventContainer.innerHTML = ""; // Clear existing events
+
+                        if (data.events.length === 0) {
+                            eventContainer.innerHTML = "<p>No more events available.</p>";
+                        } else {
+                            data.events.forEach(event => {
+                                const eventHTML = `
+                                    <div class="event-container">
+                                        <div class="event-date">
+                                            <span class="day">${event.day.substring(0, 3).toUpperCase()}</span>
+                                            <span class="date">${new Date(event.event_date).getDate()}</span>
+                                        </div>
+                                        <div class="event-details">
+                                            <div class="event-header">
+                                                ${event.is_featured ? `
+                                                <span class="featured-icon">
+                                                    <svg width="15px" height="15px" viewBox="0 0 8 10" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0h8v10L4.049 7.439 0 10V0z"></path>
+                                                    </svg>
+                                                    <span class="featured-text">Featured</span>
+                                                </span>` : ''}
+                                                <span class="event-time">${event.event_date} @ ${event.event_time} - ${event.event_end_time} ${event.time_zone}</span>
+                                            </div>
+                                            <h3 class="event-title">
+                                                <a href="event.php?id=${event.id}" class="event-link">${event.event_name}</a>
+                                            </h3>
+                                            <address class="event-venue">${event.event_venue}</address>
+                                            <div class="event-description">
+                                                <p>${event.event_description.substring(0, 200)}${event.event_description.length > 200 ? "..." : ""}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                                eventContainer.insertAdjacentHTML("beforeend", eventHTML);
+                            });
+                        }
+
+                        // Enable/Disable pagination buttons
+                        prevButton.style.display = data.has_prev ? "inline-block" : "none";
+                        nextButton.style.display = data.has_next ? "inline-block" : "none";
+                    })
+                    .catch(error => console.error("Error fetching events:", error));
+            }
+
+            // Event listeners for pagination
+            document.getElementById("prev-page").addEventListener("click", function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    fetchEvents(currentPage);
+                }
+            });
+
+            document.getElementById("next-page").addEventListener("click", function () {
+                currentPage++;
+                fetchEvents(currentPage);
+            });
+
+            // Initial fetch
+            fetchEvents(currentPage);
+        });
+    </script>
 </body>
 
 </html>

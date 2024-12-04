@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="password" name="password" id="password" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
-                            <a href="./index.html" class="btn btn-danger btn-block">Return to Homepage</a>
+                            <a href="./index.php" class="btn btn-danger btn-block">Return to Homepage</a>
                         </form>
                     </div>
                 </div>

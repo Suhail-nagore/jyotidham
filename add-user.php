@@ -10,25 +10,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5" style="margin-top:4rem !important; margin-bottom:4rem !important; max-width: 500px !important; border: 3px solid blue;border-radius:15px">
     <h2>User Registration</h2>
-    <form action="add-user.php" method="POST" id="userForm">
+    <form action="add-user.php" method="POST" id="userForm" style="margin-top:2rem !important; margin-bottom:2rem !important;">
         <!-- First Name -->
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="firstName" name="firstName" required>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required>
         </div>
 
         <!-- Last Name -->
         <div class="mb-3">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="lastName" name="lastName" required>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required>
         </div>
 
         <!-- Email with Dynamic Validation -->
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
             <div id="emailFeedback" class="invalid-feedback">
                 Please enter a valid email address.
             </div>
@@ -45,49 +45,27 @@
 
         <!-- Address Fields with Autocomplete -->
         <div class="mb-3">
-            <label for="houseNumber" class="form-label">House Number</label>
-            <input type="number" class="form-control" id="houseNumber" name="houseNumber" required>
-        </div>
-        <div class="mb-3">
-            <label for="street" class="form-label">Street</label>
-            <input type="text" class="form-control" id="street" name="street" required>
-        </div>
-        <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-        </div>
-        <div class="mb-3">
-            <label for="state" class="form-label">State/Province</label>
-            <input type="text" class="form-control" id="state" name="stateProvince" required>
-        </div>
-        <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country" name="country" value="Canada" readonly required>
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Start typing your address" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="./dashboard.php" class="btn btn-secondary"> Back to Dashboard</a>
     </form>
 </div>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include the database connection
     include 'db.php';
 
-    // Collect and sanitize form data
     $firstName = $conn->real_escape_string($_POST['firstName']);
     $lastName = $conn->real_escape_string($_POST['lastName']);
     $email = $conn->real_escape_string($_POST['email']);
-    $fullPhoneNumber = $conn->real_escape_string($_POST['fullPhoneNumber']);
-    $houseNumber = $conn->real_escape_string($_POST['houseNumber']);
-    $street = $conn->real_escape_string($_POST['street']);
-    $city = $conn->real_escape_string($_POST['city']);
-    $stateProvince = $conn->real_escape_string($_POST['stateProvince']);
-    $country = $conn->real_escape_string($_POST['country']);
+    $phoneNumber = $conn->real_escape_string($_POST['phoneNumber']);
+    $address = $conn->real_escape_string($_POST['address']);
 
-    // Insert data into Usersdetails table
-    $sql = "INSERT INTO Usersdetails (FirstName, LastName, Email, phoneNumber, Address, houseNumber, street, city, stateProvince, country) 
-            VALUES ('$firstName', '$lastName', '$email', '$fullPhoneNumber', '$houseNumber $street, $city, $stateProvince, $country', '$houseNumber', '$street', '$city', '$stateProvince', '$country')";
+    $sql = "INSERT INTO Users (FirstName, LastName, Email, PhoneNumber, Address) 
+            VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$address')";
 
     if ($conn->query($sql) === TRUE) {
         echo "<div class='alert alert-success mt-3'>New record created successfully</div>";
@@ -100,50 +78,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!-- Google Maps API for Autocomplete -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP4YgDI3gOakb5Y-kqrCCtCT4M8pj9Mzk&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBM1nAywoajfBnPLSqZn0z5wvUNj2ZYhF0&libraries=places"></script>
 <script>
 function initAutocomplete() {
-    var streetField = document.getElementById('street');
-    var cityField = document.getElementById('city');
-    var stateField = document.getElementById('state');
-    var countryField = document.getElementById('country');
+    var addressField = document.getElementById('address');
 
-    // Initialize Autocomplete only for the street input
-    var autocomplete = new google.maps.places.Autocomplete(streetField, {
-        types: ['address'],
-        componentRestrictions: { country: 'ca' } // Restrict results to Canada
+    // Initialize Google Maps Autocomplete
+    var autocomplete = new google.maps.places.Autocomplete(addressField, {
+        types: ['geocode'],
+        componentRestrictions: { country: 'ca' } // Restrict to Canada
     });
 
-    // When a place is selected from the autocomplete dropdown
+    // Optional: You can listen for the 'place_changed' event if needed
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
-
-        // Loop through address components and assign values to the respective fields
-        for (var i = 0; i < place.address_components.length; i++) {
-            var component = place.address_components[i];
-            var types = component.types;
-
-            // Match components with fields and assign the values
-            if (types.includes("route")) {
-                streetField.value = component.long_name; // Set street name (route)
-            }
-            if (types.includes("locality")) {
-                cityField.value = component.long_name; // Set city (locality)
-            }
-            if (types.includes("administrative_area_level_1")) {
-                stateField.value = component.long_name; // Set state (administrative_area_level_1)
-            }
-            if (types.includes("country")) {
-                countryField.value = component.long_name; // Set country
-            }
-        }
+        console.log('Selected address:', place.formatted_address);
     });
 }
 
 // Initialize the autocomplete on page load
 google.maps.event.addDomListener(window, 'load', initAutocomplete);
+</script>
 
-
+<script>
 // Email validation
 document.getElementById("email").addEventListener("input", function () {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -162,7 +119,7 @@ document.getElementById("email").addEventListener("input", function () {
 
     // Initialize the intl-tel-input
     var iti = window.intlTelInput(phoneInputField, {
-        initialCountry: "auto", // Automatically detect user's country
+        initialCountry: "ca", // Automatically detect user's country
         geoIpLookup: function(callback) {
             fetch('https://ipinfo.io/json')
                 .then(function(response) { return response.json(); })
