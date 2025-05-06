@@ -57,11 +57,15 @@ if (isset($_GET['id'])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="live-satsang.html">Live Satsang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://www.youtube.com/live/QCCh6J9TWDw?si=6vgJNra2bprx9AxJ">Live Satsang</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
                     <li class="nav-item"><a class="nav-link" href="calender.php">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
+                <div class="ml-lg-3 mt-2 mt-lg-0 d-flex gap-2">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeMi6k8G3gwt9l_k_3hIszOxRj3B7goqKhXKr8znDD5RCRuIg/viewform?pli=1" target="_blank" class="btn btn-dark text-white mr-2">Volunteer</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScRNrcIXlCW3Sc0x4pOi3d-3s-OEczNAEjNhuhBcfKS6YVghQ/viewform" target="_blank" class="btn btn-dark text-white">Matha Tek Reg</a>
+            </div>
             </div>
         </nav>
     </header>

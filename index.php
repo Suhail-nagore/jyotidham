@@ -24,7 +24,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Navbar and Banner</title>
+    <title>Jyotidham | Homepage</title>
 
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Navbar and Banner</title>
+    <title>Jyotidham | Homepage</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -42,36 +42,43 @@ try {
 
     <!-- Header Section -->
     <div>
-        <header class="header-section">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
-                <a class="navbar-brand" href="index.php">
-                    <img src="./images/logo-dark-bold.png" alt="Jyotidham Logo" class="header-logo">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="live-satsang.html">Live Satsang</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="donate.html">Donate</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="calender.php">Calender</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
+    <header class="header-section">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
+        <a class="navbar-brand" href="index.php">
+            <img src="./images/logo-dark-bold.png" alt="Jyotidham Logo" class="header-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://www.youtube.com/live/QCCh6J9TWDw?si=6vgJNra2bprx9AxJ">Live Satsang</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="donate.html">Donate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="calender.php">Calender</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+            <!-- New Buttons Start -->
+            <div class="ml-lg-3 mt-2 mt-lg-0 d-flex gap-2">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeMi6k8G3gwt9l_k_3hIszOxRj3B7goqKhXKr8znDD5RCRuIg/viewform?pli=1" target="_blank" class="btn btn-dark text-white mr-2">Volunteer</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScRNrcIXlCW3Sc0x4pOi3d-3s-OEczNAEjNhuhBcfKS6YVghQ/viewform" target="_blank" class="btn btn-dark text-white">Matha Tek Reg</a>
+            </div>
+            <!-- New Buttons End -->
+        </div>
+    </nav>
+</header>
+
 
         <!-- Banner Section -->
         <section class="banner-section">

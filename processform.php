@@ -25,48 +25,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Close the statement
         $stmt->close();
 
-        // Send an email with the form data
+        // Optionally send email here (commented out for now)
+        /*
         $mail = new PHPMailer(true);
-
         try {
-            // Server settings
             $mail->isSMTP();
-            $mail->Host = 'mail.gozoomtech.com'; // Replace with your SMTP server address
+            $mail->Host = 'mail.gozoomtech.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'info@gozoomtech.com'; // Replace with your SMTP username
-            $mail->Password = 'Gozoom@123'; // Replace with your SMTP password
-            $mail->SMTPSecure = 'tls'; // Enable TLS encryption, 'ssl' also possible
+            $mail->Username = 'info@gozoomtech.com';
+            $mail->Password = 'Gozoom@123';
+            $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            // Recipients
             $mail->setFrom('info@gozoomtech.com', 'Contact Form');
-            $mail->addAddress('info@gozoomtech.com'); // Replace with the desired email address
+            $mail->addAddress('info@gozoomtech.com');
 
-            // Email content
             $mail->isHTML(false);
             $mail->Subject = 'New Contact Form Submission';
-            $mail->Body = "Name: $name\n"
-                . "Email: $email\n"
-                . "Phone: $phone\n"
-                . "Message: $message\n";
+            $mail->Body = "Name: $name\nEmail: $email\nPhone: $phone\nMessage: $message";
 
             $mail->send();
-
-            // Redirect to success page
-            header("Location: success.html");
-            exit;
-
         } catch (Exception $e) {
-            // Error sending email
-            echo "Error sending email: " . $mail->ErrorInfo;
-            exit;
+            echo "<script>alert('Email sending failed: " . $mail->ErrorInfo . "');</script>";
         }
+        */
+
+        // Redirect to homepage on success
+        header("Location: success.html");
+        exit;
     } else {
-        // Error inserting into database
-        echo "Error: " . $stmt->error;
+        // Show alert if database insertion fails
+        echo "<script>alert('Error saving data: " . $stmt->error . "'); window.history.back();</script>";
     }
 
-    // Close the database connection
+    // Close the connection
     $conn->close();
 }
 ?>
